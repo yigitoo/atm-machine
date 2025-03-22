@@ -10,6 +10,16 @@ A Python-based ATM (Automated Teller Machine) simulation that mimics basic banki
 - PIN verification
 - See Card Details
 
+### Screenshots
+
+#### Login Menu
+
+![Login Menu](images/login.png)
+
+#### Main Menu
+
+![Main Menu](images/main_menu.png)
+
 ## Installation
 
 ```bash
