@@ -12,7 +12,10 @@ class ATMApp(ctk.CTk):
         super().__init__()
 
         self.title("ATM Machine")
-        self.geometry("400x550")
+        self.width = 400
+        self.height = 600
+
+        self.geometry(f"{self.width}x{self.height}")
         ctk.set_appearance_mode("dark")
 
         self.account_number = None
@@ -25,7 +28,7 @@ class ATMApp(ctk.CTk):
 
     def create_gradient_background(self):
         """Create an animated gradient background"""
-        width, height = 400, 550
+        width, height = self.width, self.height
         gradient = Image.new("RGB", (width, height), "#1a1a1a")
         for y in range(height):
             color = (30 + y // 10, 60 + y // 15, 120 + y // 20)
@@ -81,11 +84,11 @@ class ATMApp(ctk.CTk):
         self.current_screen = ctk.CTkFrame(self, fg_color="transparent")
         self.current_screen.pack(expand=True, fill="both", padx=20, pady=20)
 
-        self.title(f'{self.account_holder} - Balance: {self.balance} ₺ - YigitBankATM')
+        self.title(f'{self.account_holder} - Balance: {self.balance:.2f} ₺ - YigitBankATM')
 
         ctk.CTkLabel(self.current_screen, text=f"Welcome, {self.account_holder}!", font=("Arial", 20, "bold")).pack(pady=10)
 
-        self.balance_label = ctk.CTkLabel(self.current_screen, text=f"Balance: ${self.balance:.2f}", font=("Arial", 18, "bold"), fg_color="gray", corner_radius=8, width=200)
+        self.balance_label = ctk.CTkLabel(self.current_screen, text=f"Balance: {self.balance:.2f}₺", font=("Arial", 18, "bold"), fg_color="gray", corner_radius=8, width=200)
         self.balance_label.pack(pady=10)
 
         withdraw_btn = ctk.CTkButton(self.current_screen, text="Withdraw", command=self.withdraw_screen)
@@ -137,8 +140,8 @@ class ATMApp(ctk.CTk):
 
             if response.get("success"):
                 self.balance = response["new_balance"]
-                self.balance_label.configure(text=f"Balance: ${self.balance:.2f}")
-                messagebox.showinfo("Success", f"Withdrawal of ${amount:.2f} successful!\nYour new balance is {self.balance}")
+                messagebox.showinfo("Success", f"Withdrawal of {amount:.2f} ₺ successful!\nYour new balance is: {self.balance:.2f} ₺.")
+                self.balance_label.configure(text=f"Balance: {self.balance:.2f} ₺")
 
             else:
                 messagebox.showerror("Error", response.get("message"))
@@ -154,8 +157,8 @@ class ATMApp(ctk.CTk):
             amount = float(self.amount_entry.get())
             requests.post(f"{API_URL}/deposit", json={"account_number": self.account_number, "amount": amount})
             self.balance += amount
-            self.balance_label.configure(text=f"Balance: ${self.balance:.2f}")
-            messagebox.showinfo("Success", f"Deposit of ${amount:.2f} successful!")
+            messagebox.showinfo("Success", f"Deposit of {amount:.2f}₺ successful!\nYour new balance is: {self.balance:.2f} ₺.")
+            self.balance_label.configure(text=f"Balance: {self.balance:.2f}₺")
         except ValueError:
             messagebox.showerror("Error", "Invalid amount entered!")
 

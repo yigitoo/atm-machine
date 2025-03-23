@@ -2,8 +2,11 @@ from flask import Flask, request, jsonify
 from pymongo import MongoClient
 
 import dotenv
+import os
 
 dotenv.load_dotenv('.env')
+db_url: str = os.getenv('MONGODB_URI')
+
 
 app = Flask(__name__)
 
