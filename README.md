@@ -26,7 +26,6 @@ A Python-based ATM (Automated Teller Machine) simulation that mimics basic banki
 $ git clone https://github.com/yourusername/atm-machine.git
 $ cd atm-machine
 $ pip3 install -r requirements.txt
-$ pip3 install -e .
 ```
 
 ## Usage
@@ -35,9 +34,9 @@ $ pip3 install -e .
 
 ```bash
 
-$ python3 -m atm_machine.server.run
+$ python3 server.py
 # create another terminal and write that:
-$ python3 -m atm_machine.client.ui
+$ python3 ui.py
 ```
 
 
